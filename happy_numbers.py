@@ -1,17 +1,26 @@
-"""
-Ejercicio 1 * Happy Numbers
-Hacer un programa que imprima los X primeros “happy numbers”.
+""" Ejercicio 1 * Happy Numbers * Lambda 
+Consigna:
+    Hacer un programa que imprima los X primeros “happy numbers”.
 """
 
 def pdi_function(number, power, base: int = 10):
-    """Perfect digital invariant function."""
+    """Perfect digital invariant function.
+        Realiza la suma de los dígitos de un número elevados a una potencia dada.
+    
+    Args:
+        number: número al que se le aplicará la operación matemática.
+        power: potencia a la que se elevan los dígitos del número.
+        base (Opcional): base del sistema de numeración. Por defecto se usa base decimal.
+    Returns:
+        Devuelve un valor entero que es el resultado de la operación matemática.
+    """
     total = 0
     while number > 0:
         total += pow(number % base, power)
         number = number // base
     return total
 
-def is_happy(number: int, goal_value: int = 1, power: int=2) -> bool:
+def is_happy(number: int, goal_value, power) -> bool:
     """Determina si el número especificado es un 'happy number'.
     
     Args:
@@ -27,7 +36,7 @@ def is_happy(number: int, goal_value: int = 1, power: int=2) -> bool:
         number = pdi_function(number, power)
     return number == goal_value
 
-def happy_numbers(n, goal_value: int=1, power: int=2):
+def happy_numbers(n: int, goal_value: int=1, power: int=2):
     """ Imprime los n primeros 'happy numbers'.
     
     Args:
@@ -40,13 +49,24 @@ def happy_numbers(n, goal_value: int=1, power: int=2):
     while len(happy_list) < n:
         if is_happy(number, goal_value, power):
             happy_list.append(number)
-        print(number)
         number += 1
     print(happy_list)
 
 
 """ 
-Ejercicio 1. Happy numbers.
-Variación A. 
+    Ejemplo de uso:
+        (Pasando solo el argumento 'n' el valor final es 1 y la potencia es 2).
+
+    >> happy_numbers(10)
+    [1, 7, 10, 13, 19, 23, 28, 31, 32, 44]
+ """
+
+""" 
+    Variación A: argumentos parametrizables.
+    Ejemplo de uso pasando argumentos 'goal_value' y 'power':
+
+    >> happy_numbers(5, 3, 3)
+    [3, 111, 1011, 1101, 1110]
+
  """
 

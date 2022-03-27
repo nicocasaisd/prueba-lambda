@@ -1,3 +1,16 @@
+""" Ejercicio 2 * Estaciones calientes * Lambda
+
+Consigna:
+    Hacer un programa que analice el archivo de recorridos de Bicicletas de la Ciudad y devuelva las tres
+    estaciones de origen más “calientes” (de las que salen más recorridos) en la mañana (de 6 a 11:59).
+
+Este script lee el archivo 'trips_2021.csv' que contiene información del uso de bicicletas en el sistema
+de CABA, disponible en 'https://data.buenosaires.gob.ar/dataset/bicicletas-publicas'. La información
+es analizada y se imprimen las 3 estaciones de las que parten más viajes en horario matutino (de 6 a 11:59 hrs).
+Se utilizan el módulo 'csv' para cargar y leer del archivo .csv, el módulo 'datetime' para convertir la fecha tipo string
+en un objeto datetime y el contenedor 'Counter' para obtener las estaciones más usadas a partir de la cuenta realizada.
+ """
+
 from collections import Counter
 import csv
 import datetime
