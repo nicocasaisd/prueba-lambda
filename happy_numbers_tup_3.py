@@ -20,7 +20,7 @@ def pdi_function(number, power, base: int = 10):
         number = number // base
     return total
 
-def is_happy(number: int, goal_value, power) -> bool:
+def is_happy(number: int, goal_value, power, seen_numbers):
     """Determina si el número especificado es un 'happy number'.
     
     Args:
@@ -30,11 +30,11 @@ def is_happy(number: int, goal_value, power) -> bool:
     Returns:
         Devuelve un valor booleano que indica si el número es un 'happy number'.
     """
-    seen_numbers = set()
-    while number != goal_value and number not in seen_numbers:
-        seen_numbers.add(number)
+    new_seen_numbers = seen_numbers.copy()
+    while number != goal_value and number not in new_seen_numbers:
+        new_seen_numbers.add(number)
         number = pdi_function(number, power)
-    return number == goal_value
+    return number == goal_value , new_seen_numbers
 
 def happy_numbers(n: int, goal_value: int=1, power: int=2):
     """ Imprime los n primeros 'happy numbers'.
@@ -44,12 +44,25 @@ def happy_numbers(n: int, goal_value: int=1, power: int=2):
         goal_value (Opcional): valor final al que debe llegar la operación para que se considere 'happy number'.
         power (Opcional): exponente de la potencia que se aplica en 'pdi_function()'.
     """
+    happy_set = set()
+    unhappy_set = set()
     happy_list = []
     number = 1
     while len(happy_list) < n:
-        if is_happy(number, goal_value, power):
+        if number in happy_set:
             happy_list.append(number)
+        elif number in unhappy_set:
+            number += 1
+            continue
+        else:
+            boolean, number_set = is_happy(number, goal_value, power, unhappy_set)
+            if boolean:
+                happy_list.append(number)
+                happy_set = happy_set.union(number_set)
+            else:
+                unhappy_set = unhappy_set.union(number_set)
         number += 1
+
     print(happy_list)
 
 
@@ -70,4 +83,4 @@ def happy_numbers(n: int, goal_value: int=1, power: int=2):
 
  """
 
-happy_numbers(10, 1, 2)
+happy_numbers(200, 1, 3)

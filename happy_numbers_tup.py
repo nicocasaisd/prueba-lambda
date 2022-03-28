@@ -34,7 +34,7 @@ def is_happy(number: int, goal_value, power) -> bool:
     while number != goal_value and number not in seen_numbers:
         seen_numbers.add(number)
         number = pdi_function(number, power)
-    return number == goal_value
+    return number == goal_value , seen_numbers
 
 def happy_numbers(n: int, goal_value: int=1, power: int=2):
     """ Imprime los n primeros 'happy numbers'.
@@ -44,12 +44,25 @@ def happy_numbers(n: int, goal_value: int=1, power: int=2):
         goal_value (Opcional): valor final al que debe llegar la operación para que se considere 'happy number'.
         power (Opcional): exponente de la potencia que se aplica en 'pdi_function()'.
     """
+    happy_set = set()
+    unhappy_set = set()
     happy_list = []
     number = 1
     while len(happy_list) < n:
-        if is_happy(number, goal_value, power):
+        if number in happy_set:
             happy_list.append(number)
+        elif number in unhappy_set:
+            number += 1
+            continue
+        else:
+            boolean, number_set = is_happy(number, goal_value, power)
+            if boolean:
+                happy_list.append(number)
+                happy_set = happy_set.union(number_set)
+            else:
+                unhappy_set = unhappy_set.union(number_set)
         number += 1
+
     print(happy_list)
 
 
@@ -70,4 +83,4 @@ def happy_numbers(n: int, goal_value: int=1, power: int=2):
 
  """
 
-happy_numbers(10, 1, 2)
+happy_numbers(5, 1, 2)
